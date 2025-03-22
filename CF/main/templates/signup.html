@@ -1,0 +1,320 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CoachFinder - Sign Up</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        /* General Styles */
+        body {
+            font-family: 'Poppins', sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f9;
+            color: #333;
+        }
+
+        .container {
+            width: 90%;
+            max-width: 500px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        h1, h2 {
+            color: #2c3e50;
+            text-align: center;
+        }
+
+        p {
+            color: #666;
+            text-align: center;
+        }
+
+        .btn {
+            display: inline-block;
+            padding: 12px 24px;
+            background-color: #ff6f61;
+            color: white;
+            text-decoration: none;
+            border-radius: 30px;
+            transition: background-color 0.3s ease, transform 0.3s ease;
+            font-weight: 600;
+            border: none;
+            cursor: pointer;
+            width: 100%;
+            text-align: center;
+        }
+
+        .btn-secondary {
+            background-color: #6a11cb;
+        }
+
+        .btn-secondary:hover {
+            background-color: #4a0d9b;
+        }
+
+        .btn:hover {
+            background-color: #ff4a3d;
+            transform: translateY(-3px);
+        }
+
+        /* Auth Form */
+        .auth-form {
+            background-color: white;
+            border-radius: 15px;
+            padding: 40px;
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+            margin-top: 40px;
+        }
+
+        .form-group {
+            margin-bottom: 25px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 600;
+            color: #2c3e50;
+        }
+
+        .form-group input {
+            width: 100%;
+            padding: 12px;
+            border: 2px solid #ddd;
+            border-radius: 30px;
+            font-size: 1rem;
+            outline: none;
+            transition: border-color 0.3s ease;
+            box-sizing: border-box;
+        }
+
+        .form-group input:focus {
+            border-color: #6a11cb;
+        }
+
+        .auth-links {
+            text-align: center;
+            margin-top: 20px;
+        }
+
+        .auth-links a {
+            color: #6a11cb;
+            text-decoration: none;
+            font-weight: 600;
+            transition: color 0.3s ease;
+        }
+
+        .auth-links a:hover {
+            color: #4a0d9b;
+            text-decoration: underline;
+        }
+
+        .logo {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        .logo h1 {
+            font-size: 2.5rem;
+            margin: 0;
+            color: #6a11cb;
+        }
+
+        /* User Type Selection */
+        .user-type {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 25px;
+        }
+
+        .user-type-option {
+            flex: 1;
+            text-align: center;
+            padding: 15px;
+            border: 2px solid #ddd;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin: 0 10px;
+        }
+
+        .user-type-option:hover {
+            border-color: #6a11cb;
+        }
+
+        .user-type-option.selected {
+            border-color: #6a11cb;
+            background-color: rgba(106, 17, 203, 0.1);
+        }
+
+        .user-type-option i {
+            font-size: 2rem;
+            color: #6a11cb;
+            margin-bottom: 10px;
+        }
+
+        /* Error Message */
+        .error-message {
+            background-color: #ffebee;
+            color: #c62828;
+            padding: 10px 15px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            display: none;
+        }
+
+        /* Success Message */
+        .success-message {
+            background-color: #e8f5e9;
+            color: #2e7d32;
+            padding: 10px 15px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            display: none;
+        }
+
+        /* Terms and Conditions */
+        .terms-checkbox {
+            display: flex;
+            align-items: center;
+            margin-bottom: 25px;
+        }
+
+        .terms-checkbox input {
+            margin-right: 10px;
+        }
+
+        /* Navigation Bar */
+        .navbar {
+            background-color: #6a11cb;
+            padding: 10px 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            color: white;
+        }
+
+        .navbar a {
+            color: white;
+            text-decoration: none;
+            margin: 0 10px;
+            font-weight: 600;
+        }
+
+        .navbar a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+    <div class="navbar">
+        <div class="logo">
+            <h1>CoachFinder</h1>
+        </div>
+        <div class="nav-links">
+            <a href="{% url 'main:index' %}">Home</a>
+            <a href="{% url 'main:login' %}">Login</a>
+            <a href="{% url 'main:signup' %}">Sign Up</a>
+        </div>
+    </div>
+
+    <div class="container">
+        <div class="logo">
+            <h1>CoachFinder</h1>
+            <p>Find your perfect sports coach</p>
+        </div>
+
+        <div class="auth-form">
+            <h2>Create a New Account</h2>
+            <div id="errorMessage" class="error-message"></div>
+            <div id="successMessage" class="success-message"></div>
+            
+            <div class="user-type">
+                <div class="user-type-option selected" data-type="athlete">
+                    <i class="fas fa-running"></i>
+                    <h3>Athlete</h3>
+                    <p>I'm looking for a coach</p>
+                </div>
+                <div class="user-type-option" data-type="coach">
+                    <i class="fas fa-whistle"></i>
+                    <h3>Coach</h3>
+                    <p>I want to offer my services</p>
+                </div>
+            </div>
+            
+            <form id="signupForm" method="POST">
+                {% csrf_token %}
+                <input type="hidden" id="userType" name="userType" value="athlete">
+                
+                <div class="form-group">
+                    <label for="first_name">First Name</label>
+                    <input type="text" id="first_name" name="first_name" placeholder="Enter your first name" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="last_name">Last Name</label>
+                    <input type="text" id="last_name" name="last_name" placeholder="Enter your last name" required>
+                </div>
+        
+                <div class="form-group">
+                    <label for="email">Email Address</label>
+                    <input type="email" id="email" name="email" placeholder="Enter your email" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="password">Password</label>
+                    <input type="password" id="password" name="password" placeholder="Create a password" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="confirmPassword">Confirm Password</label>
+                    <input type="password" id="confirmPassword" name="confirmPassword" placeholder="Confirm your password" required>
+                </div>
+                
+                <div class="terms-checkbox">
+                    <input type="checkbox" id="termsAgree" required>
+                    <label for="termsAgree">I agree to the <a href="#">Terms & Conditions</a> and <a href="#">Privacy Policy</a></label>
+                </div>
+                
+                <div class="form-group">
+                    <button type="submit" class="btn btn-secondary">Create Account</button>
+                </div>
+            </form>
+            
+            <div class="auth-links">
+                <p>Already have an account? <a href="{% url 'main:login' %}">Login</a></p>
+            </div>
+        </div>
+
+        <script>
+            // Ensure the script runs after the DOM is fully loaded
+            document.addEventListener('DOMContentLoaded', function() {
+                const userTypeOptions = document.querySelectorAll('.user-type-option');
+                const userTypeInput = document.getElementById('userType');
+                
+                if (userTypeInput) {
+                    userTypeOptions.forEach(option => {
+                        option.addEventListener('click', function() {
+                            // Remove 'selected' class from all options
+                            userTypeOptions.forEach(opt => opt.classList.remove('selected'));
+                            
+                            // Add 'selected' class to clicked option
+                            this.classList.add('selected');
+                            
+                            // Update hidden input value
+                            userTypeInput.value = this.getAttribute('data-type');
+                            console.log("User type set to:", userTypeInput.value);
+                        });
+                    });
+                } else {
+                    console.error("User type input element not found");
+                }
+            });
+        </script>
+        <script src="{% static 'js/signup.js' %}"></script>
+</body>
+</html>
